@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -21,7 +20,7 @@ public class PricePersistenceAdapter implements PriceRepository {
 
     @Override
     public List<Price> findByBrandAndProduct(BrandId brandId, ProductId productId) {
-        return dataPriceRepository.findByBrandAndProduct(brandId.value(), productId.value())
+        return dataPriceRepository.findByBrandIdAndProductId(brandId.value(), productId.value())
                 .stream()
                 .map(priceEntityMapper::toDomain)
                 .toList();

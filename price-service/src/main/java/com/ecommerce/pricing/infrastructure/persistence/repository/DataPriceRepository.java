@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface DataPriceRepository extends JpaRepository<PriceEntity, Long> {
-    List<PriceEntity> findByBrandAndProduct(Long brandId, Long productId);
+    List<PriceEntity> findByBrandIdAndProductId(Long brandId, Long productId);
 }
