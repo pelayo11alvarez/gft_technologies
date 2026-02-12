@@ -1,6 +1,7 @@
 package com.ecommerce.pricing.application.usecase;
 
 import com.ecommerce.pricing.application.mapper.PriceResultMapper;
+import com.ecommerce.pricing.domain.exception.PriceNotFoundException;
 import com.ecommerce.pricing.domain.model.Price;
 import com.ecommerce.pricing.domain.model.vo.BrandId;
 import com.ecommerce.pricing.domain.model.vo.ProductId;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.NoSuchElementException;
+
+import static com.ecommerce.pricing.domain.exception.constant.ExceptionConstant.PRICE_NOT_FOUND_DESC;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +33,7 @@ public class GetApplicablePriceUseCaseImpl implements GetApplicablePriceUseCase 
                 .stream()
                 .filter(price -> price.getRange().includes(query.date()))
                 .max(Comparator.comparing(Price::getPriority))
-                .orElseThrow(() -> new NoSuchElementException("No price found for the given criteria"));
+                .orElseThrow(() -> new PriceNotFoundException(PRICE_NOT_FOUND_DESC));
 
         return priceResultMapper.toResult(winningPrice);
     }
