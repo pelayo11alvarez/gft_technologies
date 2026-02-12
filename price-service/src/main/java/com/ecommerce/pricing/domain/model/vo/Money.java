@@ -1,7 +1,6 @@
 package com.ecommerce.pricing.domain.model.vo;
 
 import com.ecommerce.pricing.domain.exception.DomainValidationException;
-import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -26,7 +25,7 @@ public record Money(BigDecimal amount, String currency) {
     }
 
     private void validateCurrency(String currency) {
-        if (StringUtils.isEmpty(currency)) {
+        if (Objects.isNull(currency) || currency.isBlank()) {
             throw new DomainValidationException(NULL_CURRENCY_DESC);
         }
     }
