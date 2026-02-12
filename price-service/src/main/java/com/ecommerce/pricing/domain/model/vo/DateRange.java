@@ -3,9 +3,9 @@ package com.ecommerce.pricing.domain.model.vo;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public record DataRange(LocalDateTime start, LocalDateTime end) {
+public record DateRange(LocalDateTime start, LocalDateTime end) {
 
-    public DataRange {
+    public DateRange {
         validate(start, end);
     }
 

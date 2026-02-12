@@ -1,0 +1,118 @@
+openapi: 3.0.3
+info:
+  title: Price Service API
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: 'Local Server'
+paths:
+  '/price':
+    get:
+      summary: Get applicable price
+      description: |
+        Returns the final price and applicable rate for a product and string on a given date.
+        Applies priority disambiguation logic if multiple rates exist.
+      operationId: getApplicablePrice
+      parameters:
+        - name: applicationDate
+          in: query
+          description: Application price Date (ISO-8601 format).
+          required: true
+          schema:
+            type: string
+            format: date-time
+            example: "2020-06-14T10:00:00"
+        - name: productId
+          in: query
+          description: Product Id.
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+        - name: brandId
+          in: query
+          description: Brand Id (ex. 1 = ZARA).
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        '200':
+          description: Price successfully found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceResponse'
+        '400':
+          description: Invalid parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    PriceResponse:
+      type: object
+      description: Final price and applicable rate data.
+      properties:
+        productId:
+          type: integer
+          format: int64
+          description: Product Id.
+          example: 1
+        brandId:
+          type: integer
+          format: int64
+          description: Brand Id.
+          example: 1
+        priceList:
+          type: integer
+          format: int64
+          description: Rate Id.
+          example: 1
+        startDate:
+          type: string
+          format: date-time
+          description: Rate effective date.
+        endDate:
+          type: string
+          format: date-time
+          description: Rate expiration date.
+        price:
+          type: number
+          format: double
+          description: Final price to apply.
+          example: 35.50
+      required:
+        - productId
+        - brandId
+        - priceList
+        - startDate
+        - endDate
+        - price
+
+    ErrorResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+          example: 404
+        error:
+          type: string
+          example: "Not Found"
+        message:
+          type: string
+          example: "No price found for the given criteria"
+        path:
+          type: string

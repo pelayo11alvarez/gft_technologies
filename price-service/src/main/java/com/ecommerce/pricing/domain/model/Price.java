@@ -8,12 +8,12 @@ public class Price {
     private final BrandId brandId;
     private final ProductId productId;
     private final PriceListId priceListId;
-    private final DataRange range;
+    private final DateRange range;
     private final Integer priority;
     private final Money price;
 
     public Price(BrandId brandId, ProductId productId, PriceListId priceListId,
-                 DataRange range, Integer priority, Money price) {
+                 DateRange range, Integer priority, Money price) {
         this.brandId = brandId;
         this.productId = productId;
         this.priceListId = priceListId;
@@ -34,7 +34,7 @@ public class Price {
         return priceListId;
     }
 
-    public DataRange getRange() {
+    public DateRange getRange() {
         return range;
     }
 
