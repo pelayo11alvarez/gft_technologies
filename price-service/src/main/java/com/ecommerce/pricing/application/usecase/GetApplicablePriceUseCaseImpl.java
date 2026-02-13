@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
-import java.util.NoSuchElementException;
 
 import static com.ecommerce.pricing.domain.exception.constant.ExceptionConstant.PRICE_NOT_FOUND_DESC;
 
