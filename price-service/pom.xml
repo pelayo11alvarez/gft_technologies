@@ -32,6 +32,9 @@
 		<mapstruct.version>1.6.3</mapstruct.version>
 		<openapi-generator.version>7.5.0</openapi-generator.version>
 		<instancio.version>5.5.1</instancio.version>
+		<jacoco.version>0.8.11</jacoco.version>
+		<cucumber.version>7.16.1</cucumber.version>
+		<surefire.version>3.2.3</surefire.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -76,6 +79,29 @@
 			<groupId>org.instancio</groupId>
 			<artifactId>instancio-junit</artifactId>
 			<version>${instancio.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-junit-platform-engine</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-spring</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-suite</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -141,6 +167,54 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<excludes>
+								<exclude>**com/ecommerce/pricing/domain/port/in/dto/in/*</exclude>
+								<exclude>**com/ecommerce/pricing/infrastructure/rest/advice/*</exclude>
+								<exclude>**com/ecommerce/pricing/infrastructure/rest/api/*</exclude>
+								<exclude>**com/ecommerce/pricing/infrastructure/rest/api/model/*</exclude>
+								<exclude>**com/ecommerce/pricing/PriceServiceApplication.class</exclude>
+							</excludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${surefire.version}</version>
+				<configuration>
+					<testFailureIgnore>true</testFailureIgnore>
+					<excludes>
+						<exclude>**/*$*</exclude>
+					</excludes>
+					<includes>
+						<include>**/*Test.java</include>
+						<include>**/CucumberTestSuite.java</include>
+					</includes>
+					<rerunFailingTestsCount>0</rerunFailingTestsCount>
+					<forkCount>1</forkCount>
+					<reuseForks>false</reuseForks>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

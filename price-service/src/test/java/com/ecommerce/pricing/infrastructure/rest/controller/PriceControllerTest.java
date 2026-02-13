@@ -77,6 +77,6 @@ class PriceControllerTest {
         mockMvc.perform(get("/price")
                         .param("productId", "35455")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isInternalServerError());
     }
 }

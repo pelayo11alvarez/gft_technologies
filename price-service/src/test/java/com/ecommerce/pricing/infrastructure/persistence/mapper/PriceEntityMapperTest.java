@@ -7,7 +7,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.instancio.Select.field;
 
 @ExtendWith(MockitoExtension.class)
 class PriceEntityMapperTest {
@@ -18,7 +21,12 @@ class PriceEntityMapperTest {
     @Test
     void givenValidPriceEntity_whenToDomain_thenReturnPrice() {
         //given
-        final var entity = Instancio.create(PriceEntity.class);
+        final var startDate = LocalDateTime.of(2020, 6, 1, 0, 0);
+        final var endDate = LocalDateTime.of(2020, 7, 14, 0, 0);
+        final var entity = Instancio.of(PriceEntity.class)
+                .set(field("startDate"), startDate)
+                .set(field("endDate"), endDate)
+                .create();
 
         //when
         final var domain = mapper.toDomain(entity);

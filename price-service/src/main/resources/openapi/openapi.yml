@@ -29,7 +29,7 @@ paths:
           schema:
             type: integer
             format: int64
-            example: 1
+            example: 3545
         - name: brandId
           in: query
           description: Brand Id (ex. 1 = ZARA).
@@ -67,7 +67,7 @@ components:
           type: integer
           format: int64
           description: Product Id.
-          example: 1
+          example: 3545
         brandId:
           type: integer
           format: int64

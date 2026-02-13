@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: price-service-test
+
+  datasource:
+    url: jdbc:h2:mem:pricetestdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:config/h2/schema.sql
+      data-locations: classpath:config/h2/data.sql
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 0 #Random port
+
+logging:
+  level:
+    root: INFO
+    org.springframework: WARN
+    org.hibernate.SQL: DEBUG
+    com.ecommerce.pricing: DEBUG
