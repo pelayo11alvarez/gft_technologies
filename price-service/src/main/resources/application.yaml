@@ -20,3 +20,15 @@ spring:
       mode: always
       schema-locations: classpath:config/h2/schema.sql
       data-locations: classpath:config/h2/data.sql
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+    doc-expansion: list
+
+server:
+  port: 8080

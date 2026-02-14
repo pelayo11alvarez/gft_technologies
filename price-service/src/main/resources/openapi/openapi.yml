@@ -1,7 +1,11 @@
 openapi: 3.0.3
 info:
-  title: Price Service API
-  version: '1.0'
+  title: E-Commerce Pricing API
+  description: Microservice for checking prices applicable to products by chain.
+  version: 1.0.0
+  contact:
+    name: Pelayo Alvarez Garcia
+    email: pelayo11alvarea@gmail.com
 servers:
   - url: 'http://localhost:8080'
     description: 'Local Server'
@@ -16,20 +20,20 @@ paths:
       parameters:
         - name: applicationDate
           in: query
-          description: Application price Date (ISO-8601 format).
+          description: Application price Date (ISO-8601 format) (ex 2020-06-14T10:00:00Z).
           required: true
           schema:
             type: string
             format: date-time
-            example: "2020-06-14T10:00:00"
+          example: "2020-06-14T10:00:00Z"
         - name: productId
           in: query
-          description: Product Id.
+          description: Product Id (ex 3545).
           required: true
           schema:
             type: integer
             format: int64
-            example: 3545
+          example: 3545
         - name: brandId
           in: query
           description: Brand Id (ex. 1 = ZARA).
@@ -37,7 +41,7 @@ paths:
           schema:
             type: integer
             format: int64
-            example: 1
+          example: 1
       responses:
         '200':
           description: Price successfully found.
