@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  price-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: price-service-app:latest
+    container_name: price-service-container
+    ports:
+      - "8080:8080"
