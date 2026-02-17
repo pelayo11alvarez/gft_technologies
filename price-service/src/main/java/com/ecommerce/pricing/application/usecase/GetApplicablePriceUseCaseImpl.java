@@ -6,7 +6,7 @@ import com.ecommerce.pricing.domain.model.Price;
 import com.ecommerce.pricing.domain.model.vo.BrandId;
 import com.ecommerce.pricing.domain.model.vo.ProductId;
 import com.ecommerce.pricing.domain.port.in.GetApplicablePriceUseCase;
-import com.ecommerce.pricing.domain.port.in.dto.in.GetPriceQuery;
+import com.ecommerce.pricing.domain.port.in.dto.in.GetPriceRequest;
 import com.ecommerce.pricing.domain.port.in.dto.out.PriceResult;
 import com.ecommerce.pricing.domain.port.out.PriceRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,13 +24,13 @@ public class GetApplicablePriceUseCaseImpl implements GetApplicablePriceUseCase 
     private final PriceResultMapper priceResultMapper;
 
     @Override
-    public PriceResult execute(GetPriceQuery query) {
-        final var brandId = new BrandId(query.brandId());
-        final var productId = new ProductId(query.productId());
+    public PriceResult execute(GetPriceRequest request) {
+        final var brandId = new BrandId(request.brandId());
+        final var productId = new ProductId(request.productId());
 
         final var winningPrice = priceRepository.findByBrandAndProduct(brandId, productId)
                 .stream()
-                .filter(price -> price.getRange().includes(query.date()))
+                .filter(price -> price.getRange().includes(request.date()))
                 .max(Comparator.comparing(Price::getPriority))
                 .orElseThrow(() -> new PriceNotFoundException(PRICE_NOT_FOUND_DESC));
 

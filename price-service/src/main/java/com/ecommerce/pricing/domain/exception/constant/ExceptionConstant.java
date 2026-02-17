@@ -12,4 +12,5 @@ public final class ExceptionConstant {
     public static final String INVALID_AMOUNT_DESC = "Invalid amount";
     public static final String NULL_CURRENCY_DESC = "Currency cannot be null";
     public static final String PRICE_NOT_FOUND_DESC = "No price found for the given criteria";
+    public static final String NULL_GET_PRICE_REQUEST_DESC = "Request parameters cannot be null";
 }

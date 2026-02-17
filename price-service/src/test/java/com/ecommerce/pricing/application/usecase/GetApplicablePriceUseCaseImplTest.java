@@ -6,7 +6,7 @@ import com.ecommerce.pricing.domain.model.Price;
 import com.ecommerce.pricing.domain.model.vo.BrandId;
 import com.ecommerce.pricing.domain.model.vo.DateRange;
 import com.ecommerce.pricing.domain.model.vo.ProductId;
-import com.ecommerce.pricing.domain.port.in.dto.in.GetPriceQuery;
+import com.ecommerce.pricing.domain.port.in.dto.in.GetPriceRequest;
 import com.ecommerce.pricing.domain.port.in.dto.out.PriceResult;
 import com.ecommerce.pricing.domain.port.out.PriceRepository;
 import org.instancio.Instancio;
@@ -40,10 +40,10 @@ class GetApplicablePriceUseCaseImplTest {
     private PriceResultMapper priceResultMapper;
 
     @Test
-    void shouldReturnHighestPriorityPrice() {
+    void givenPricesList_whenExecute_thenReturnHighestPriorityPrice() {
         //given
         final var dateRange = dateRangeProvider();
-        final var query = getPriceQueryProvider();
+        final var request = getPriceRequestProvider();
         final var lowPriorityPrice = Instancio.of(Price.class)
                 .set(field("priority"), 0)
                 .set(field("range"), dateRange)
@@ -61,7 +61,7 @@ class GetApplicablePriceUseCaseImplTest {
         when(priceResultMapper.toResult(captor.capture())).thenReturn(expectedResult);
 
         //when
-        final var result = getApplicablePriceUseCase.execute(query);
+        final var result = getApplicablePriceUseCase.execute(request);
 
         //then
         assertThat(captor.getValue()).isEqualTo(highPriorityPrice);
@@ -76,20 +76,20 @@ class GetApplicablePriceUseCaseImplTest {
         return new DateRange(startDate, endDate);
     }
 
-    private static GetPriceQuery getPriceQueryProvider() {
+    private static GetPriceRequest getPriceRequestProvider() {
         final var targetDate = LocalDateTime.of(2020, 6, 14, 16, 0);
-        return new GetPriceQuery(1L, 35455L, targetDate);
+        return new GetPriceRequest(1L, 35455L, targetDate);
     }
 
     @Test
-    void shouldThrowExceptionWhenNoPriceIsApplicable() {
+    void givenEmptyPricesList_whenExecute_thenThrowPriceNotFoundException() {
         //given
-        final var query = Instancio.create(GetPriceQuery.class);
+        final var request = Instancio.create(GetPriceRequest.class);
 
         when(priceRepository.findByBrandAndProduct(any(), any())).thenReturn(List.of());
 
         //when /then
-        assertThatThrownBy(() -> getApplicablePriceUseCase.execute(query))
+        assertThatThrownBy(() -> getApplicablePriceUseCase.execute(request))
                 .isInstanceOf(PriceNotFoundException.class)
                 .hasMessage(PRICE_NOT_FOUND_DESC);
 

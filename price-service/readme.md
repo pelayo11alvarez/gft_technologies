@@ -43,12 +43,21 @@ Since price rates are data with a high read frequency and low update frequency, 
 
 ## How to run the project
 
-The project includes a multi-stage Dockerfile that compiles the code, runs the entire test suite, and launches the application on a lightweight JRE image. You only need to have Docker installed.
+The project includes a multi-stage Dockerfile that compiles the code, runs the entire test suite, and launches the application on a lightweight JRE image. You only need to have Docker installed and running.
 
 ```bash
 # At the project root, run:
 docker compose up --build
 ```
+
+### Generated Reports
+
+After running the previous build, navigable visual reports are automatically generated in the following paths:
+
+* **Code Coverage Report (JaCoCo):** `target/site/jacoco/index.html`
+* **RAcceptance Test Report (Cucumber):** `target/cucumber-reports/index.html`
+
+---
 
 ## Endpoints and Documentation (Swagger)
 

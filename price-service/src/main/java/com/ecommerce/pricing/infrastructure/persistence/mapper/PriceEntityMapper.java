@@ -1,7 +1,11 @@
 package com.ecommerce.pricing.infrastructure.persistence.mapper;
 
 import com.ecommerce.pricing.domain.model.Price;
-import com.ecommerce.pricing.domain.model.vo.*;
+import com.ecommerce.pricing.domain.model.vo.BrandId;
+import com.ecommerce.pricing.domain.model.vo.DateRange;
+import com.ecommerce.pricing.domain.model.vo.Money;
+import com.ecommerce.pricing.domain.model.vo.PriceListId;
+import com.ecommerce.pricing.domain.model.vo.ProductId;
 import com.ecommerce.pricing.infrastructure.persistence.entity.PriceEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

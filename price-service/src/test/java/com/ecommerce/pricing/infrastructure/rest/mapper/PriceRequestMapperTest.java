@@ -11,10 +11,10 @@ import java.time.ZoneOffset;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
-class PriceQueryMapperTest {
+class PriceRequestMapperTest {
 
     @InjectMocks
-    private PriceQueryMapperImpl mapper;
+    private PriceRequestMapperImpl mapper;
 
     @Test
     void givenValidArguments_whenToGetPriceQuery_thenReturnGetQueryPrice() {
@@ -26,21 +26,21 @@ class PriceQueryMapperTest {
         final var expectedDate = applicationDate.toLocalDateTime();
 
         //when
-        final var query = mapper.toGetPriceQuery(productId, brandId, applicationDate);
+        final var request = mapper.toGetPriceRequest(productId, brandId, applicationDate);
 
         //then
-        assertThat(query).isNotNull();
-        assertThat(query.productId()).isEqualTo(productId);
-        assertThat(query.brandId()).isEqualTo(brandId);
-        assertThat(query.date()).isEqualTo(expectedDate);
+        assertThat(request).isNotNull();
+        assertThat(request.productId()).isEqualTo(productId);
+        assertThat(request.brandId()).isEqualTo(brandId);
+        assertThat(request.date()).isEqualTo(expectedDate);
     }
 
     @Test
     void givenNullArguments_whenToGetPriceQuery_thenReturnGetQueryPrice() {
         //when
-        final var query = mapper.toGetPriceQuery(null, null, null);
+        final var request = mapper.toGetPriceRequest(null, null, null);
 
         //then
-        assertThat(query).isNull();
+        assertThat(request).isNull();
     }
 }

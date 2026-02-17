@@ -1,10 +1,10 @@
 package com.ecommerce.pricing.infrastructure.rest.controller;
 
 import com.ecommerce.pricing.domain.port.in.GetApplicablePriceUseCase;
-import com.ecommerce.pricing.domain.port.in.dto.in.GetPriceQuery;
+import com.ecommerce.pricing.domain.port.in.dto.in.GetPriceRequest;
 import com.ecommerce.pricing.domain.port.in.dto.out.PriceResult;
 import com.ecommerce.pricing.infrastructure.rest.api.model.PriceResponse;
-import com.ecommerce.pricing.infrastructure.rest.mapper.PriceQueryMapper;
+import com.ecommerce.pricing.infrastructure.rest.mapper.PriceRequestMapper;
 import com.ecommerce.pricing.infrastructure.rest.mapper.PriceResponseMapper;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ class PriceControllerTest {
     private GetApplicablePriceUseCase getApplicablePriceUseCase;
 
     @MockitoBean
-    private PriceQueryMapper priceQueryMapper;
+    private PriceRequestMapper priceRequestMapper;
 
     @MockitoBean
     private PriceResponseMapper priceResponseMapper;
@@ -46,15 +46,15 @@ class PriceControllerTest {
         final var brandId = 1L;
         final String dateStr = "2020-06-14T16:00:00Z";
 
-        final var query = Instancio.create(GetPriceQuery.class);
+        final var request = Instancio.create(GetPriceRequest.class);
         final var result = Instancio.create(PriceResult.class);
         final var response = Instancio.create(PriceResponse.class);
         response.setProductId(productId);
         response.setPrice(35.50);
 
-        when(priceQueryMapper.toGetPriceQuery(eq(productId), eq(brandId), any(OffsetDateTime.class)))
-                .thenReturn(query);
-        when(getApplicablePriceUseCase.execute(query)).thenReturn(result);
+        when(priceRequestMapper.toGetPriceRequest(eq(productId), eq(brandId), any(OffsetDateTime.class)))
+                .thenReturn(request);
+        when(getApplicablePriceUseCase.execute(request)).thenReturn(result);
         when(priceResponseMapper.toPriceResponse(result)).thenReturn(response);
 
         //when /then
@@ -67,8 +67,8 @@ class PriceControllerTest {
                 .andExpect(jsonPath("$.productId").value(productId))
                 .andExpect(jsonPath("$.price").value(35.50));
 
-        verify(priceQueryMapper).toGetPriceQuery(eq(productId), eq(brandId), any(OffsetDateTime.class));
-        verify(getApplicablePriceUseCase).execute(query);
+        verify(priceRequestMapper).toGetPriceRequest(eq(productId), eq(brandId), any(OffsetDateTime.class));
+        verify(getApplicablePriceUseCase).execute(request);
     }
 
     @Test

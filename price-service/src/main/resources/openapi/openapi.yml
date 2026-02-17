@@ -22,26 +22,26 @@ paths:
           in: query
           description: Application price Date (ISO-8601 format) (ex 2020-06-14T10:00:00Z).
           required: true
+          example: "2020-06-14T10:00:00Z"
           schema:
             type: string
             format: date-time
-          example: "2020-06-14T10:00:00Z"
         - name: productId
           in: query
           description: Product Id (ex 3545).
           required: true
+          example: 3545
           schema:
             type: integer
             format: int64
-          example: 3545
         - name: brandId
           in: query
           description: Brand Id (ex. 1 = ZARA).
           required: true
+          example: 1
           schema:
             type: integer
             format: int64
-          example: 1
       responses:
         '200':
           description: Price successfully found.
